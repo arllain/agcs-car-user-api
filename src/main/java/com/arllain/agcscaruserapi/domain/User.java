@@ -1,24 +1,27 @@
 package com.arllain.agcscaruserapi.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
+
+@Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class User {
 
     @Id
@@ -36,20 +39,22 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Past
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
-    private Date birthday;
+    private LocalDate birthday;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     @Size(min = 4, message = "Minimum login length: 4 characters")
     private String login;
 
     @JsonIgnore
     @Column(nullable = false)
-    @Size(min = 6, message = "Minimum password length: 6 characters")
+    @Size(min = 5, message = "Minimum password length: 6 characters")
     private String password;
 
     @Column(nullable = false)
-    @Size(min = 10, message = "Minimum phone length: 10 characters")
+    @Size(min = 9, message = "Minimum phone length: 9 characters")
     private String phone;
 
     private Instant created_at;
@@ -57,7 +62,6 @@ public class User {
     private Instant last_login;
 
     @OneToMany(mappedBy="user", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Car> cars;
-
+            cascade = {CascadeType.ALL})
+    private List<Car> cars = new ArrayList<>();
 }

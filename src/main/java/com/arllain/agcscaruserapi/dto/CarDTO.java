@@ -1,6 +1,7 @@
 package com.arllain.agcscaruserapi.dto;
 
 import com.arllain.agcscaruserapi.domain.Car;
+import com.arllain.agcscaruserapi.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -22,12 +23,12 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarDataDTO implements Serializable {
+public class CarDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(position = 0)
-    @NotEmpty(message = "year is required")
+    @NotNull(message = "year is required")
     private Integer year;
 
     @ApiModelProperty(position = 1)
@@ -41,4 +42,8 @@ public class CarDataDTO implements Serializable {
     @ApiModelProperty(position = 3)
     @NotEmpty(message = "Color is required")
     private String color;
+
+    @ApiModelProperty(position = 4)
+    private User user;
+
 }

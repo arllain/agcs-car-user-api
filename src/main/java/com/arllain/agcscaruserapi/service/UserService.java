@@ -14,6 +14,7 @@ import com.arllain.agcscaruserapi.security.JwtTokenProvider;
 import com.arllain.agcscaruserapi.service.exception.ObjectFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class UserService {
      * @return User
      */
     @Transactional
-    public User save(User user) {
+    public String save(User user) {
         if (userRepository.existsByEmail(user.getEmail())) {
             throw new ObjectFoundException("E-mail already exists");
         }
@@ -94,7 +95,8 @@ public class UserService {
         }
 
         userRepository.save(user);
-        return  user;
+
+        return user.getId().toString();
     }
 
     /**
@@ -117,5 +119,17 @@ public class UserService {
         user.setCreated_at(savedUser.getCreated_at());
         user.setLast_login(savedUser.getLast_login());
         userRepository.save(user);
+    }
+
+    /**
+     * @param req
+     * @return
+     */
+    public User whoami(HttpServletRequest req) {
+        try {
+            return userRepository.findByLogin(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+        } catch (AuthenticationException e) {
+            throw new AuthenticationCustomException("Invalid login or password");
+        }
     }
 }

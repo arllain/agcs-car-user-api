@@ -39,8 +39,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)//
                 .securitySchemes(Collections.singletonList(apiKey()))
                 .securityContexts(Collections.singletonList(securityContext()))
-                .tags(new Tag("user", "Operations about user"))//
-                .tags(new Tag("car", "Operations about car"))//
+                .tags(new Tag("users", "Operations about users"))//
                 .genericModelSubstitutes(Optional.class);
 
     }
@@ -49,7 +48,7 @@ public class SwaggerConfig {
         return new ApiInfoBuilder()//
                 .title("API RESTful para Sistema de Usuários de Carros")//
                 .description(
-                        "In construction. ")
+                        "This is a sample JWT authentication service.")//
                 .version("1.0.0")//
                 .license("MIT License").licenseUrl("http://opensource.org/licenses/MIT")//
                 .contact(new Contact(null, null, "arllain@gmail.com"))//

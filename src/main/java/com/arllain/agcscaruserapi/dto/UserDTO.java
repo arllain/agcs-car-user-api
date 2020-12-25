@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.*;
 
-import com.arllain.agcscaruserapi.domain.Car;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -55,5 +54,5 @@ public class UserDTO implements Serializable {
     private String phone;
 
     @ApiModelProperty(position = 7)
-    private List<CarDataDTO> cars;
+    private List<CarDTO> cars;
 }

@@ -1,22 +1,19 @@
 package com.arllain.agcscaruserapi.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.arllain.agcscaruserapi.domain.User;
 import com.arllain.agcscaruserapi.dto.UserResponseDTO;
 import com.arllain.agcscaruserapi.dto.UserSignInDTO;
 import com.arllain.agcscaruserapi.service.UserService;
+import io.swagger.annotations.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.arllain.agcscaruserapi.dto.UserDTO;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +43,6 @@ public class UserController {
         return ResponseEntity.ok(userService.signIn(modelMapper.map(user, User.class)));
     }
 
-
     @GetMapping(path = "/users")
     @ApiOperation(value = "${UserController.listAll}", response = UserResponseDTO.class)
     public ResponseEntity<List<UserResponseDTO>> listAll() {
@@ -63,7 +59,6 @@ public class UserController {
             @ApiResponse(code = 404, message = "User not found")})
     public ResponseEntity<UserResponseDTO> findById(@ApiParam("id") @PathVariable long id) {
         return ResponseEntity.ok(modelMapper.map(userService.findById(id), UserResponseDTO.class));
-
     }
 
     @PostMapping(path = "/users")
@@ -73,8 +68,8 @@ public class UserController {
             @ApiResponse(code = 422, message = "Login already exists"), //
             @ApiResponse(code = 400, message = "Validation error"), //
             })
-    public ResponseEntity<User> save(@ApiParam("User Signup") @Valid @RequestBody UserDTO userDTO) {
-        return new ResponseEntity<>(userService.save(modelMapper.map(userDTO, User.class)), HttpStatus.CREATED);
+    public ResponseEntity<String> save(@ApiParam("User Signup") @Valid @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.save(modelMapper.map(userDTO, User.class)));
     }
 
     @DeleteMapping(path = "/users/{id}")
@@ -96,5 +91,16 @@ public class UserController {
                                        @Valid @RequestBody UserDTO userDTO) {
         userService.update(id, modelMapper.map(userDTO, User.class));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(value = "/me")
+    @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = {
+            @Authorization(value = "apiKey") })
+    @ApiResponses(value = { //
+            @ApiResponse(code = 400, message = "Validation error"), //
+            @ApiResponse(code = 401, message = "Unauthorized"), //
+            @ApiResponse(code = 440, message = "Unauthorized - invalid session") })
+    public UserResponseDTO whoami(HttpServletRequest req) {
+        return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
     }
 }

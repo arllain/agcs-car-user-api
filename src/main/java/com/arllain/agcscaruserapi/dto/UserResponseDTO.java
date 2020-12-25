@@ -1,13 +1,10 @@
 package com.arllain.agcscaruserapi.dto;
 
-import com.arllain.agcscaruserapi.domain.Car;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -37,11 +34,14 @@ public class UserResponseDTO implements Serializable {
     private String login;
 
     @ApiModelProperty(position = 5)
-    List<CarResponseDTO> cars;
+    private String phone;
 
     @ApiModelProperty(position = 6)
-    private Instant created_at;
+    List<CarResponseDTO> cars;
 
     @ApiModelProperty(position = 7)
+    private Instant created_at;
+
+    @ApiModelProperty(position = 8)
     private Instant last_login;
 }

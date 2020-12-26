@@ -17,11 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tb_user")
 public class User {
 
     @Id

@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "tb_car")
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

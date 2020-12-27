@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.arllain</groupId>
 	<artifactId>agcs-car-user-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>agcs-car-user-api</name>
 	<description>Sistema de Usuários de Carros</description>
 

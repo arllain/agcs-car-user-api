@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import com.arllain.agcscaruserapi.domain.User;
+import com.arllain.agcscaruserapi.dto.UserCredentialsDTO;
 import com.arllain.agcscaruserapi.dto.UserResponseDTO;
 import com.arllain.agcscaruserapi.dto.UserSignInDTO;
 import com.arllain.agcscaruserapi.service.UserService;
@@ -39,7 +40,7 @@ public class UserController {
     @ApiResponses(value = { //
             @ApiResponse(code = 400, message = "Validation error"), //
             @ApiResponse(code = 401, message = "Invalid login or password") })
-    public ResponseEntity<String> signin(@ApiParam("User SignIn") @Valid @RequestBody UserSignInDTO user) {
+    public ResponseEntity<UserCredentialsDTO> signin(@ApiParam("User SignIn") @Valid @RequestBody UserSignInDTO user) {
         return ResponseEntity.ok(userService.signIn(modelMapper.map(user, User.class)));
     }
 

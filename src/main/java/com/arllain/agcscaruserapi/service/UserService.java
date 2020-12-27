@@ -1,6 +1,10 @@
 package com.arllain.agcscaruserapi.service;
 
+import com.arllain.agcscaruserapi.domain.User;
+import com.arllain.agcscaruserapi.dto.UserCredentialsDTO;
+import com.arllain.agcscaruserapi.dto.UserDataDTO;
 import com.arllain.agcscaruserapi.service.exception.AuthenticationCustomException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,7 +12,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.arllain.agcscaruserapi.domain.User;
 import com.arllain.agcscaruserapi.repository.UserRepository;
 import com.arllain.agcscaruserapi.security.JwtTokenProvider;
 import com.arllain.agcscaruserapi.service.exception.ObjectFoundException;
@@ -37,20 +40,28 @@ public class UserService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+
     /**
-     * @param user
+     * @param userSignin
      * @return
      */
-    public String signIn(User user) {
+    public UserCredentialsDTO signIn(User userSignin) {
         try {
             authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(user.getLogin(),
-                            user.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(userSignin.getLogin(),
+                            userSignin.getPassword()));
 
-            User savedUser = userRepository.findByLogin(user.getLogin());
+            com.arllain.agcscaruserapi.domain.User savedUser = userRepository.findByLogin(userSignin.getLogin());
             savedUser.setLast_login(Instant.now());
             userRepository.save(savedUser);
-            return jwtTokenProvider.createToken(user.getLogin());
+
+            String token = jwtTokenProvider.createToken(userSignin.getLogin());
+            UserDataDTO user = modelMapper.map(savedUser, UserDataDTO.class);
+            UserCredentialsDTO credential = new UserCredentialsDTO(user, token);
+            return credential;
         } catch (AuthenticationException e) {
             throw new AuthenticationCustomException("Invalid login or password");
         }

@@ -19,21 +19,6 @@
 &nbsp;
 &nbsp;
 
-
-***
-&nbsp;
-
-## You can access the api in Heroku at: [agcs-user-api](https://agcs-car-user-api.herokuapp.com/swagger-ui.html)
-
-&nbsp;
-
-<p align="left">
-  <img alt="Layout" src=".github/agcs-car-user-api.herokuapp.com_swagger-ui.html.png" width="1000">
-</p>
-
-***
-&nbsp;
-
 ## How to use this code?
 &nbsp;
 
@@ -65,6 +50,36 @@ $ mvn spring-boot:run
 ```
 
 6. Navigate to `http://localhost:8080/swagger-ui.html` in your browser to check everything is working correctly. 
+
+
+***
+&nbsp;
+
+## You can access the api in Heroku at: [agcs-user-api](https://agcs-car-user-api.herokuapp.com/swagger-ui.html)
+
+&nbsp;
+
+<p align="left">
+  <img alt="Layout" src=".github/agcs-car-user-api.herokuapp.com_swagger-ui.html.png" width="800">
+</p>
+
+***
+&nbsp;
+
+***
+&nbsp;
+
+## You can see all the user stories in this [kanban board](https://github.com/arllain/agcs-car-user-api/projects/1)
+
+&nbsp;
+
+<p align="left">
+  <img alt="Layout" src=".github/quadro kanban.png" width="800">
+</p>
+
+***
+&nbsp;
+
 
 ---
 

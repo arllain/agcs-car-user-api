@@ -23,6 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/signin",
             "/api/signup",
             "/api/users/**",
+            "/api/cars/**",
             "/h2-console/**",
     };
 

@@ -46,6 +46,18 @@ $ mvn install
 5. Run the project
 
 ```
+you need to change to test profile in the application.properties file
+ 
+```
+<p align="left">
+  <img alt="Layout" src=".github/test-profile.png" width="600">
+</p>
+
+
+
+
+
+```
 $ mvn spring-boot:run
 ```
 

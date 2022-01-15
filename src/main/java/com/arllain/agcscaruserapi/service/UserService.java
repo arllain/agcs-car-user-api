@@ -4,6 +4,7 @@ import com.arllain.agcscaruserapi.domain.User;
 import com.arllain.agcscaruserapi.dto.UserCredentialsDTO;
 import com.arllain.agcscaruserapi.dto.UserDataDTO;
 import com.arllain.agcscaruserapi.service.exception.AuthenticationCustomException;
+import com.arllain.agcscaruserapi.service.exception.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -81,7 +82,7 @@ public class UserService {
      */
     public User findById(long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ObjectFoundException("User not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("User not found"));
     }
 
     /**
